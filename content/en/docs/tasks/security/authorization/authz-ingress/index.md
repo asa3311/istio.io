@@ -186,20 +186,20 @@ If you are using a TCP/UDP Proxy external load balancer (AWS Classic ELB), it ca
 {{< tab name="Istio classic" category-value="istio-classic" >}}
 
 {{< text yaml >}}
-apiVersion: networking.istio.io/v1alp ha3
+apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
   name: proxy-protocol
   namespace: istio-system
 spec:
   configPatches:
-  - applyTo: LISTENER
+  - applyTo: LISTENER_FILTER
     patch:
-      operation: MERGE
+      operation: INSERT_FIRST
       value:
-        listener_filters:
-        - name: envoy.listener.proxy_protocol
-        - name: envoy.listener.tls_inspector
+        name: proxy_protocol
+        typed_config:
+          "@type": "type.googleapis.com/envoy.extensions.filters.listener.proxy_protocol.v3.ProxyProtocol"
   workloadSelector:
     labels:
       istio: ingressgateway
@@ -210,20 +210,20 @@ spec:
 {{< tab name="Gateway API" category-value="gateway-api" >}}
 
 {{< text yaml >}}
-apiVersion: networking.istio.io/v1alp ha3
+apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
   name: proxy-protocol
   namespace: foo
 spec:
   configPatches:
-  - applyTo: LISTENER
+  - applyTo: LISTENER_FILTER
     patch:
-      operation: MERGE
+      operation: INSERT_FIRST
       value:
-        listener_filters:
-        - name: envoy.listener.proxy_protocol
-        - name: envoy.listener.tls_inspector
+        name: proxy_protocol
+        typed_config:
+          "@type": "type.googleapis.com/envoy.extensions.filters.listener.proxy_protocol.v3.ProxyProtocol"
   workloadSelector:
     labels:
       istio.io/gateway-name: httpbin-gateway
