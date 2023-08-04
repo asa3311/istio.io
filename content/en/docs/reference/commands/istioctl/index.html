@@ -1832,7 +1832,7 @@ Checks associated resources of the given resource, and running webhooks to exami
 </table>
 <h3 id="istioctl-experimental-config Examples">Examples</h3>
 <pre class="language-bash"><code>  # list configuration parameters
-  istioctl config list
+  istioctl experimental config list
 </code></pre>
 <h2 id="istioctl-experimental-config-list">istioctl experimental config list</h2>
 <p>List istio configurable defaults</p>
@@ -2397,6 +2397,16 @@ calculated over a time interval of 1 minute.
 <td><code>--namespace &lt;string&gt;</code></td>
 <td><code>-n</code></td>
 <td>Kubernetes namespace  (default ``)</td>
+</tr>
+<tr>
+<td><code>--output &lt;string&gt;</code></td>
+<td><code>-o</code></td>
+<td>Output format: one of [log json yaml]  (default `log`)</td>
+</tr>
+<tr>
+<td><code>--output-threshold &lt;Level&gt;</code></td>
+<td></td>
+<td>The severity level of precheck at which to display messages. Valid values: [Info Warning Error]  (default `Warning`)</td>
 </tr>
 <tr>
 <td><code>--revision &lt;string&gt;</code></td>
@@ -3782,7 +3792,7 @@ Configure requires either the WorkloadGroup artifact path or its location on the
 <tr>
 <td><code>--namespace &lt;string&gt;</code></td>
 <td><code>-n</code></td>
-<td>The namespace that the workload instances belongs to  (default ``)</td>
+<td>The namespace that the workload instances belong to  (default ``)</td>
 </tr>
 <tr>
 <td><code>--output &lt;string&gt;</code></td>
@@ -7107,7 +7117,7 @@ These environment variables affect the behavior of the <code>istioctl</code> com
 <td><code>ISTIO_ENABLE_OPTIMIZED_SERVICE_PUSH</code></td>
 <td>Boolean</td>
 <td><code>true</code></td>
-<td>If enabled, Istiod will not push changes on arbitraty annotation change.</td>
+<td>If enabled, Istiod will not push changes on arbitrary annotation change.</td>
 </tr>
 <tr>
 <td><code>ISTIO_GPRC_MAXRECVMSGSIZE</code></td>
@@ -7144,6 +7154,18 @@ These environment variables affect the behavior of the <code>istioctl</code> com
 <td>String</td>
 <td><code></code></td>
 <td>If set, limit Kubernetes watches to a single namespace. Warning: only a single namespace can be set.</td>
+</tr>
+<tr>
+<td><code>ISTIO_WORKLOAD_ENTRY_VALIDATE_IDENTITY</code></td>
+<td>Boolean</td>
+<td><code>true</code></td>
+<td>If enabled, will validate the identity of a workload matches the identity of the WorkloadEntry it is associating with for health checks and auto registration. This flag is added for backwards compatibility only and will be removed in future releases</td>
+</tr>
+<tr>
+<td><code>JWKS_RESOLVER_INSECURE_SKIP_VERIFY</code></td>
+<td>Boolean</td>
+<td><code>false</code></td>
+<td>If enabled, istiod will skip verifying the certificate of the JWKS server.</td>
 </tr>
 <tr>
 <td><code>JWT_POLICY</code></td>
@@ -7290,12 +7312,6 @@ These environment variables affect the behavior of the <code>istioctl</code> com
 <td>If enabled, pilot will read WorkloadEntry from other clusters, selectable by Services in that cluster.</td>
 </tr>
 <tr>
-<td><code>PILOT_ENABLE_DESTINATION_RULE_INHERITANCE</code></td>
-<td>Boolean</td>
-<td><code>false</code></td>
-<td>If set, workload specific DestinationRules will inherit configurations settings from mesh and namespace level rules</td>
-</tr>
-<tr>
 <td><code>PILOT_ENABLE_EDS_DEBOUNCE</code></td>
 <td>Boolean</td>
 <td><code>true</code></td>
@@ -7372,18 +7388,6 @@ These environment variables affect the behavior of the <code>istioctl</code> com
 <td>Boolean</td>
 <td><code>false</code></td>
 <td>If enabled, Istiod sets up persistent session filter for listeners, if services have &#39;PILOT_PERSISTENT_SESSION_LABEL&#39; set.</td>
-</tr>
-<tr>
-<td><code>PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_INBOUND</code></td>
-<td>Boolean</td>
-<td><code>true</code></td>
-<td>If enabled, protocol sniffing will be used for inbound listeners whose port protocol is not specified or unsupported</td>
-</tr>
-<tr>
-<td><code>PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_OUTBOUND</code></td>
-<td>Boolean</td>
-<td><code>true</code></td>
-<td>If enabled, protocol sniffing will be used for outbound listeners whose port protocol is not specified or unsupported</td>
 </tr>
 <tr>
 <td><code>PILOT_ENABLE_QUIC_LISTENERS</code></td>
@@ -7731,8 +7735,6 @@ These environment variables affect the behavior of the <code>istioctl</code> com
 <tr><td><code>num_outgoing_retries</code></td><td><code>Sum</code></td><td>Number of outgoing retry requests (e.g. to a token exchange server, CA, etc.)</td></tr>
 <tr><td><code>owned_resource_total</code></td><td><code>LastValue</code></td><td>Number of resources currently owned by the operator</td></tr>
 <tr><td><code>pilot_conflict_inbound_listener</code></td><td><code>LastValue</code></td><td>Number of conflicting inbound listeners.</td></tr>
-<tr><td><code>pilot_conflict_outbound_listener_http_over_current_tcp</code></td><td><code>LastValue</code></td><td>Number of conflicting wildcard http listeners with current wildcard tcp listener.</td></tr>
-<tr><td><code>pilot_conflict_outbound_listener_tcp_over_current_http</code></td><td><code>LastValue</code></td><td>Number of conflicting wildcard tcp listeners with current wildcard http listener.</td></tr>
 <tr><td><code>pilot_conflict_outbound_listener_tcp_over_current_tcp</code></td><td><code>LastValue</code></td><td>Number of conflicting tcp listeners with current tcp listener.</td></tr>
 <tr><td><code>pilot_debounce_time</code></td><td><code>Distribution</code></td><td>Delay in seconds between the first config enters debouncing and the merged push request is pushed into the push queue.</td></tr>
 <tr><td><code>pilot_destrule_subsets</code></td><td><code>LastValue</code></td><td>Duplicate subsets across destination rules for same host</td></tr>

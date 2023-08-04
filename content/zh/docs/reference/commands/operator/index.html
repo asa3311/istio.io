@@ -221,11 +221,11 @@ to enable it.  You can execute the following once:</p>
 </tr>
 <tr>
 <td><code>--log_caller &lt;string&gt;</code></td>
-<td>Comma-separated list of scopes for which to include caller information, scopes can be any of [ads, adsc, all, analysis, authn, authorization, ca, controllers, default, delta, file, gateway, grpcgen, ingress status, installer, klog, kube, model, patch, processing, retry, security, serviceentry, spiffe, status, tpath, translator, trustBundle, util, validation, wasm, wle]  (default ``)</td>
+<td>Comma-separated list of scopes for which to include caller information, scopes can be any of [ads, adsc, all, analysis, authn, authorization, ca, controllers, default, delta, file, gateway, grpcgen, ingress status, installer, klog, kube, model, monitoring, patch, processing, retry, security, serviceentry, spiffe, status, tpath, translator, trustBundle, util, validation, wasm, wle]  (default ``)</td>
 </tr>
 <tr>
 <td><code>--log_output_level &lt;string&gt;</code></td>
-<td>Comma-separated minimum per-scope logging level of messages to output, in the form of &lt;scope&gt;:&lt;level&gt;,&lt;scope&gt;:&lt;level&gt;,... where scope can be one of [ads, adsc, all, analysis, authn, authorization, ca, controllers, default, delta, file, gateway, grpcgen, ingress status, installer, klog, kube, model, patch, processing, retry, security, serviceentry, spiffe, status, tpath, translator, trustBundle, util, validation, wasm, wle] and level can be one of [debug, info, warn, error, fatal, none]  (default `default:info`)</td>
+<td>Comma-separated minimum per-scope logging level of messages to output, in the form of &lt;scope&gt;:&lt;level&gt;,&lt;scope&gt;:&lt;level&gt;,... where scope can be one of [ads, adsc, all, analysis, authn, authorization, ca, controllers, default, delta, file, gateway, grpcgen, ingress status, installer, klog, kube, model, monitoring, patch, processing, retry, security, serviceentry, spiffe, status, tpath, translator, trustBundle, util, validation, wasm, wle] and level can be one of [debug, info, warn, error, fatal, none]  (default `default:info`)</td>
 </tr>
 <tr>
 <td><code>--log_rotate &lt;string&gt;</code></td>
@@ -245,7 +245,7 @@ to enable it.  You can execute the following once:</p>
 </tr>
 <tr>
 <td><code>--log_stacktrace_level &lt;string&gt;</code></td>
-<td>Comma-separated minimum per-scope logging level at which stack traces are captured, in the form of &lt;scope&gt;:&lt;level&gt;,&lt;scope:level&gt;,... where scope can be one of [ads, adsc, all, analysis, authn, authorization, ca, controllers, default, delta, file, gateway, grpcgen, ingress status, installer, klog, kube, model, patch, processing, retry, security, serviceentry, spiffe, status, tpath, translator, trustBundle, util, validation, wasm, wle] and level can be one of [debug, info, warn, error, fatal, none]  (default `default:none`)</td>
+<td>Comma-separated minimum per-scope logging level at which stack traces are captured, in the form of &lt;scope&gt;:&lt;level&gt;,&lt;scope:level&gt;,... where scope can be one of [ads, adsc, all, analysis, authn, authorization, ca, controllers, default, delta, file, gateway, grpcgen, ingress status, installer, klog, kube, model, monitoring, patch, processing, retry, security, serviceentry, spiffe, status, tpath, translator, trustBundle, util, validation, wasm, wle] and level can be one of [debug, info, warn, error, fatal, none]  (default `default:none`)</td>
 </tr>
 <tr>
 <td><code>--log_target &lt;stringArray&gt;</code></td>
@@ -518,7 +518,7 @@ These environment variables affect the behavior of the <code>operator</code> com
 <td><code>ISTIO_ENABLE_OPTIMIZED_SERVICE_PUSH</code></td>
 <td>Boolean</td>
 <td><code>true</code></td>
-<td>If enabled, Istiod will not push changes on arbitraty annotation change.</td>
+<td>If enabled, Istiod will not push changes on arbitrary annotation change.</td>
 </tr>
 <tr>
 <td><code>ISTIO_GPRC_MAXRECVMSGSIZE</code></td>
@@ -555,6 +555,18 @@ These environment variables affect the behavior of the <code>operator</code> com
 <td>String</td>
 <td><code></code></td>
 <td>If set, limit Kubernetes watches to a single namespace. Warning: only a single namespace can be set.</td>
+</tr>
+<tr>
+<td><code>ISTIO_WORKLOAD_ENTRY_VALIDATE_IDENTITY</code></td>
+<td>Boolean</td>
+<td><code>true</code></td>
+<td>If enabled, will validate the identity of a workload matches the identity of the WorkloadEntry it is associating with for health checks and auto registration. This flag is added for backwards compatibility only and will be removed in future releases</td>
+</tr>
+<tr>
+<td><code>JWKS_RESOLVER_INSECURE_SKIP_VERIFY</code></td>
+<td>Boolean</td>
+<td><code>false</code></td>
+<td>If enabled, istiod will skip verifying the certificate of the JWKS server.</td>
 </tr>
 <tr>
 <td><code>JWT_POLICY</code></td>
@@ -701,12 +713,6 @@ These environment variables affect the behavior of the <code>operator</code> com
 <td>If enabled, pilot will read WorkloadEntry from other clusters, selectable by Services in that cluster.</td>
 </tr>
 <tr>
-<td><code>PILOT_ENABLE_DESTINATION_RULE_INHERITANCE</code></td>
-<td>Boolean</td>
-<td><code>false</code></td>
-<td>If set, workload specific DestinationRules will inherit configurations settings from mesh and namespace level rules</td>
-</tr>
-<tr>
 <td><code>PILOT_ENABLE_EDS_DEBOUNCE</code></td>
 <td>Boolean</td>
 <td><code>true</code></td>
@@ -783,18 +789,6 @@ These environment variables affect the behavior of the <code>operator</code> com
 <td>Boolean</td>
 <td><code>false</code></td>
 <td>If enabled, Istiod sets up persistent session filter for listeners, if services have &#39;PILOT_PERSISTENT_SESSION_LABEL&#39; set.</td>
-</tr>
-<tr>
-<td><code>PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_INBOUND</code></td>
-<td>Boolean</td>
-<td><code>true</code></td>
-<td>If enabled, protocol sniffing will be used for inbound listeners whose port protocol is not specified or unsupported</td>
-</tr>
-<tr>
-<td><code>PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_OUTBOUND</code></td>
-<td>Boolean</td>
-<td><code>true</code></td>
-<td>If enabled, protocol sniffing will be used for outbound listeners whose port protocol is not specified or unsupported</td>
 </tr>
 <tr>
 <td><code>PILOT_ENABLE_QUIC_LISTENERS</code></td>
@@ -1142,8 +1136,6 @@ These environment variables affect the behavior of the <code>operator</code> com
 <tr><td><code>num_outgoing_retries</code></td><td><code>Sum</code></td><td>Number of outgoing retry requests (e.g. to a token exchange server, CA, etc.)</td></tr>
 <tr><td><code>owned_resource_total</code></td><td><code>LastValue</code></td><td>Number of resources currently owned by the operator</td></tr>
 <tr><td><code>pilot_conflict_inbound_listener</code></td><td><code>LastValue</code></td><td>Number of conflicting inbound listeners.</td></tr>
-<tr><td><code>pilot_conflict_outbound_listener_http_over_current_tcp</code></td><td><code>LastValue</code></td><td>Number of conflicting wildcard http listeners with current wildcard tcp listener.</td></tr>
-<tr><td><code>pilot_conflict_outbound_listener_tcp_over_current_http</code></td><td><code>LastValue</code></td><td>Number of conflicting wildcard tcp listeners with current wildcard http listener.</td></tr>
 <tr><td><code>pilot_conflict_outbound_listener_tcp_over_current_tcp</code></td><td><code>LastValue</code></td><td>Number of conflicting tcp listeners with current tcp listener.</td></tr>
 <tr><td><code>pilot_debounce_time</code></td><td><code>Distribution</code></td><td>Delay in seconds between the first config enters debouncing and the merged push request is pushed into the push queue.</td></tr>
 <tr><td><code>pilot_destrule_subsets</code></td><td><code>LastValue</code></td><td>Duplicate subsets across destination rules for same host</td></tr>
