@@ -508,14 +508,14 @@ to enable it.  You can execute the following once:</p>
 <td>Do not call any external dependencies like iptables. </td>
 </tr>
 <tr>
+<td><code>--dual-stack</code></td>
+<td></td>
+<td>Enable ipv4/ipv6 redirects for dual-stack. </td>
+</tr>
+<tr>
 <td><code>--envoy-port &lt;string&gt;</code></td>
 <td><code>-p</code></td>
 <td>Specify the envoy port to which redirect all TCP traffic (default $ENVOY_PORT = 15001).  (default ``)</td>
-</tr>
-<tr>
-<td><code>--host-nsenter-exec</code></td>
-<td></td>
-<td>Instead of using the internal go netns, use the nsenter command for switching network namespaces. </td>
 </tr>
 <tr>
 <td><code>--inbound-capture-port &lt;string&gt;</code></td>
@@ -536,6 +536,11 @@ to enable it.  You can execute the following once:</p>
 <td><code>--iptables-trace-logging</code></td>
 <td></td>
 <td>Insert tracing logs for each iptables rules, using the LOG chain. </td>
+</tr>
+<tr>
+<td><code>--iptables-version &lt;string&gt;</code></td>
+<td></td>
+<td>version of iptables command. If not set, this is automatically detected.  (default ``)</td>
 </tr>
 <tr>
 <td><code>--istio-exclude-interfaces &lt;string&gt;</code></td>
@@ -1184,6 +1189,12 @@ These environment variables affect the behavior of the <code>pilot-agent</code> 
 <td>If enabled, readiness probes will keep the connection from pilot-agent to the application alive. This mirrors older Istio versions&#39; behaviors, but not kubelet&#39;s.</td>
 </tr>
 <tr>
+<td><code>ENABLE_SELECTOR_BASED_K8S_GATEWAY_POLICY</code></td>
+<td>Boolean</td>
+<td><code>true</code></td>
+<td>If disabled, Gateway API gateways will ignore workloadSelector policies, onlyapplying policies that select the gateway with a targetRef.</td>
+</tr>
+<tr>
 <td><code>ENABLE_TLS_ON_SIDECAR_INGRESS</code></td>
 <td>Boolean</td>
 <td><code>false</code></td>
@@ -1368,6 +1379,12 @@ These environment variables affect the behavior of the <code>pilot-agent</code> 
 <td>Boolean</td>
 <td><code>true</code></td>
 <td>If enabled, HTTP2 probes will be enabled for HTTPS probes, following Kubernetes</td>
+</tr>
+<tr>
+<td><code>ISTIO_ENABLE_IPV4_OUTBOUND_LISTENER_FOR_IPV6_CLUSTERS</code></td>
+<td>Boolean</td>
+<td><code>false</code></td>
+<td>If true, pilot will configure an additional IPv4 listener for outbound traffic in IPv6 only clusters, e.g. AWS EKS IPv6 only clusters.</td>
 </tr>
 <tr>
 <td><code>ISTIO_ENABLE_OPTIMIZED_SERVICE_PUSH</code></td>
@@ -1638,12 +1655,6 @@ Only applies when traffic from all groups (i.e. &#34;*&#34;) is being redirected
 <td>If enabled, pilot will read WorkloadEntry from other clusters, selectable by Services in that cluster.</td>
 </tr>
 <tr>
-<td><code>PILOT_ENABLE_DESTINATION_RULE_INHERITANCE</code></td>
-<td>Boolean</td>
-<td><code>false</code></td>
-<td>If set, workload specific DestinationRules will inherit configurations settings from mesh and namespace level rules</td>
-</tr>
-<tr>
 <td><code>PILOT_ENABLE_EDS_DEBOUNCE</code></td>
 <td>Boolean</td>
 <td><code>true</code></td>
@@ -1666,6 +1677,12 @@ Only applies when traffic from all groups (i.e. &#34;*&#34;) is being redirected
 <td>Boolean</td>
 <td><code>true</code></td>
 <td>If this is set to true, gateway-api resources will automatically provision in cluster deployment, services, etc</td>
+</tr>
+<tr>
+<td><code>PILOT_ENABLE_GATEWAY_API_GATEWAYCLASS_CONTROLLER</code></td>
+<td>Boolean</td>
+<td><code>true</code></td>
+<td>If this is set to true, istiod will create and manage its default GatewayClasses</td>
 </tr>
 <tr>
 <td><code>PILOT_ENABLE_GATEWAY_API_STATUS</code></td>
@@ -1954,6 +1971,12 @@ Only applies when traffic from all groups (i.e. &#34;*&#34;) is being redirected
 <td>Boolean</td>
 <td><code>false</code></td>
 <td>Whether to generate PKCS#8 private keys</td>
+</tr>
+<tr>
+<td><code>PLATFORM</code></td>
+<td>String</td>
+<td><code></code></td>
+<td>Platform where Istio is deployed. Possible values are &#34;openshift&#34; and &#34;gcp&#34;</td>
 </tr>
 <tr>
 <td><code>POD_NAME</code></td>
