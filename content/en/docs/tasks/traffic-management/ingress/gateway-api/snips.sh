@@ -22,7 +22,7 @@
 
 snip_setup_1() {
 kubectl get crd gateways.gateway.networking.k8s.io &> /dev/null || \
-  { kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd?ref=f98e94a5305e3a08cb14f8a03470f8f3bdf6d54c" | kubectl apply -f -; }
+  { kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd?ref=8b6ff014127f13e366a2ed04383eee7645ab24a3" | kubectl apply -f -; }
 }
 
 snip_setup_2() {
@@ -241,11 +241,14 @@ snip_cleanup_1() {
 kubectl delete -f samples/httpbin/httpbin.yaml
 kubectl delete httproute http
 kubectl delete gateways.gateway.networking.k8s.io gateway -n istio-ingress
-istioctl uninstall -y --purge
-kubectl delete ns istio-system
 kubectl delete ns istio-ingress
 }
 
 snip_cleanup_2() {
-kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd?ref=f98e94a5305e3a08cb14f8a03470f8f3bdf6d54c" | kubectl delete -f -
+istioctl uninstall -y --purge
+kubectl delete ns istio-system
+}
+
+snip_cleanup_3() {
+kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd?ref=8b6ff014127f13e366a2ed04383eee7645ab24a3" | kubectl delete -f -
 }

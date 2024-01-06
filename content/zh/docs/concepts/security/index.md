@@ -52,7 +52,7 @@ Istio 中的安全性涉及多个组件：
     - [授权策略](/zh/docs/concepts/security/#authorization-policies)
     - [安全命名信息](/zh/docs/concepts/security/#secure-naming)
 
-- Sidecar 和边缘代理作为[策略执行点](https://www.jerichosystems.com/technology/glossaryterms/policy_enforcement_point.html)（PEP）
+- Sidecar 和边缘代理作为[策略执行点](https://csrc.nist.gov/glossary/term/policy_enforcement_point)（PEP）
   以保护客户端和服务器之间的通信安全。
 - 一组 Envoy 代理扩展，用于管理遥测和审计
 
@@ -64,7 +64,7 @@ PEP 用 Envoy 实现。下图显示了架构。
     caption="安全架构"
     >}}
 
-在接下来的部分中，我们将详细介绍 Istio 安全功能。
+下文将详细介绍 Istio 安全功能。
 
 ## Istio 身份 {#istio-identity}
 
@@ -461,7 +461,7 @@ Istio 按以下顺序检查层中的匹配策略：`CUSTOM`、`DENY`，
 
 下图详细显示了策略优先级：
 
-{{< image width="50%" link="./authz-eval.png" caption="授权策略优先级">}}
+{{< image width="50%" link="./authz-eval.svg" caption="授权策略优先级">}}
 
 当您将多个授权策略应用于同一工作负载时，Istio 会累加地应用它们。
 

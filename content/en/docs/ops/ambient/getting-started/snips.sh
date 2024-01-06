@@ -22,11 +22,11 @@
 
 snip_download_and_install_2() {
 kubectl get crd gateways.gateway.networking.k8s.io &> /dev/null || \
-  { kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd/experimental?ref=f98e94a5305e3a08cb14f8a03470f8f3bdf6d54c" | kubectl apply -f -; }
+  { kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd/experimental?ref=8b6ff014127f13e366a2ed04383eee7645ab24a3" | kubectl apply -f -; }
 }
 
 snip_download_and_install_3() {
-istioctl install --set values.pilot.env.PILOT_ENABLE_CONFIG_DISTRIBUTION_TRACKING=true --set profile=ambient --set components.ingressGateways[0].enabled=true --set components.ingressGateways[0].name=istio-ingressgateway --skip-confirmation
+istioctl install --set values.pilot.env.PILOT_ENABLE_CONFIG_DISTRIBUTION_TRACKING=true --set profile=ambient --set "components.ingressGateways[0].enabled=true" --set "components.ingressGateways[0].name=istio-ingressgateway" --skip-confirmation
 }
 
 snip_download_and_install_5() {
@@ -166,19 +166,19 @@ kubectl apply -f - <<EOF
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
- name: productpage-viewer
- namespace: default
+  name: productpage-viewer
+  namespace: default
 spec:
- selector:
-   matchLabels:
-     app: productpage
- action: ALLOW
- rules:
- - from:
-   - source:
-       principals:
-       - cluster.local/ns/default/sa/sleep
-       - cluster.local/$GATEWAY_SERVICE_ACCOUNT
+  selector:
+    matchLabels:
+      app: productpage
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+        - cluster.local/ns/default/sa/sleep
+        - cluster.local/$GATEWAY_SERVICE_ACCOUNT
 EOF
 }
 
@@ -238,22 +238,23 @@ kubectl apply -f - <<EOF
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
- name: productpage-viewer
- namespace: default
+  name: productpage-viewer
+  namespace: default
 spec:
- selector:
-   matchLabels:
-     istio.io/gateway-name: bookinfo-productpage
- action: ALLOW
- rules:
- - from:
-   - source:
-       principals:
-       - cluster.local/ns/default/sa/sleep
-       - cluster.local/$GATEWAY_SERVICE_ACCOUNT
-   to:
-   - operation:
-       methods: ["GET"]
+  targetRef:
+    kind: Gateway
+    group: gateway.networking.k8s.io
+    name: bookinfo-productpage
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+        - cluster.local/ns/default/sa/sleep
+        - cluster.local/$GATEWAY_SERVICE_ACCOUNT
+    to:
+    - operation:
+        methods: ["GET"]
 EOF
 }
 
@@ -324,5 +325,5 @@ kubectl delete -f samples/sleep/notsleep.yaml
 }
 
 snip_uninstall_4() {
-kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd/experimental?ref=f98e94a5305e3a08cb14f8a03470f8f3bdf6d54c" | kubectl delete -f -
+kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd/experimental?ref=8b6ff014127f13e366a2ed04383eee7645ab24a3" | kubectl delete -f -
 }

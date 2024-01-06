@@ -253,7 +253,7 @@ command terminated with exit code 56
 {{< /text >}}
 
 要优化每个端口的双向 TLS 设置，您必须配置 `portLevelMtls` 字段。
-例如，以下对等认证策略要求在除 `80` 端口以外的所有端口上都使用双向 TLS：
+例如，以下对等认证策略要求在除 `8080` 端口以外的所有端口上都使用双向 TLS：
 
 {{< text bash >}}
 $ cat <<EOF | kubectl apply -n bar -f -
@@ -269,7 +269,7 @@ spec:
   mtls:
     mode: STRICT
   portLevelMtls:
-    80:
+    8080:
       mode: DISABLE
 EOF
 {{< /text >}}
@@ -420,9 +420,10 @@ metadata:
   name: "jwt-example"
   namespace: foo
 spec:
-  selector:
-    matchLabels:
-      istio.io/gateway-name: httpbin-gateway
+  targetRef:
+    kind: Gateway
+    group: gateway.networking.k8s.io
+    name: httpbin-gateway
   jwtRules:
   - issuer: "testing@secure.istio.io"
     jwksUri: "{{< github_file >}}/security/tools/jwt/samples/jwks.json"
@@ -541,9 +542,10 @@ metadata:
   name: "frontend-ingress"
   namespace: foo
 spec:
-  selector:
-    matchLabels:
-      istio.io/gateway-name: httpbin-gateway
+  targetRef:
+    kind: Gateway
+    group: gateway.networking.k8s.io
+    name: httpbin-gateway
   action: DENY
   rules:
   - from:
@@ -607,9 +609,10 @@ metadata:
   name: "frontend-ingress"
   namespace: foo
 spec:
-  selector:
-    matchLabels:
-      istio.io/gateway-name: httpbin-gateway
+  targetRef:
+    kind: Gateway
+    group: gateway.networking.k8s.io
+    name: httpbin-gateway
   action: DENY
   rules:
   - from:

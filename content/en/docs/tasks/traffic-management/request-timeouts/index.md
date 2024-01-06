@@ -97,7 +97,8 @@ spec:
   http:
   - fault:
       delay:
-        percent: 100
+        percentage:
+          value: 100
         fixedDelay: 2s
     route:
     - destination:
@@ -125,7 +126,8 @@ spec:
   http:
   - fault:
       delay:
-        percent: 100
+        percentage:
+          value: 100
         fixedDelay: 2s
     route:
     - destination:
@@ -137,7 +139,8 @@ EOF
 
 {{< /tabset >}}
 
-3)  Open the Bookinfo URL `http://$GATEWAY_URL/productpage` in your browser.
+3)  Open the Bookinfo URL `http://$GATEWAY_URL/productpage` in your browser, where `$GATEWAY_URL` is the External IP address of the ingress, as explained in
+the [Bookinfo](/docs/examples/bookinfo/#determine-the-ingress-ip-and-port) doc.
 
     You should see the Bookinfo application working normally (with ratings stars displayed),
     but there is a 2 second delay whenever you refresh the page.

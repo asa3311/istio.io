@@ -16,7 +16,6 @@ others specified by the
 [platform-specific setup instructions](/docs/setup/platform-setup/).
 
 {{< warning >}}
-Ambient is currently in [alpha status](/docs/releases/feature-stages/#feature-phase-definitions).
 Note that Ambient currently requires the use of [istio-cni](/docs/setup/additional-setup/cni) to configure Kubernetes nodes.
 `istio-cni` ambient mode does **not** currently support types of cluster CNI (namely, CNI implementations that do not use `veth` devices, such as [Minikube's](https://kubernetes.io/docs/tasks/tools/install-minikube/) `bridge` mode)
 {{< /warning >}}
@@ -64,12 +63,18 @@ Follow these steps to get started with ambient:
     Install Istio with the `ambient` profile on your Kubernetes cluster, using
     the `istioctl` command downloaded above:
 
+{{< tip >}}
+Note that if you are using [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) (or any other platform using nodes configured with a nonstandard `netns` path for containers), you may need to append `--set values.cni.cniNetnsDir="/var/run/docker/netns"` to the `istioctl install` command so that the Istio CNI DaemonSet can correctly manage and capture pods on the node.
+
+Consult your platform documentation for details.
+{{< /tip >}}
+
 {{< tabset category-name="config-api" >}}
 
 {{< tab name="Istio APIs" category-value="istio-apis" >}}
 
 {{< text bash >}}
-$ istioctl install --set profile=ambient --set components.ingressGateways[0].enabled=true --set components.ingressGateways[0].name=istio-ingressgateway --skip-confirmation
+$ istioctl install --set profile=ambient --set "components.ingressGateways[0].enabled=true" --set "components.ingressGateways[0].name=istio-ingressgateway" --skip-confirmation
 {{< /text >}}
 
 After running the above command, you’ll get the following output that indicates
@@ -179,6 +184,10 @@ Make sure the default namespace does not include the label `istio-injection=enab
     Note: `sleep` and `notsleep` are two simple applications that can serve as curl clients.
 
 1. Deploy an ingress gateway so you can access the bookinfo app from outside the cluster:
+
+    {{< tip >}}
+    To get IP address assignment for `Loadbalancer` service types in `kind`, you may need to install a tool like [MetalLB](https://metallb.universe.tf/). Please consult [this guide](https://kind.sigs.k8s.io/docs/user/loadbalancer/) for more information.
+    {{</ tip >}}
 
 {{< tabset category-name="config-api" >}}
 
@@ -294,19 +303,19 @@ $ kubectl apply -f - <<EOF
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
- name: productpage-viewer
- namespace: default
+  name: productpage-viewer
+  namespace: default
 spec:
- selector:
-   matchLabels:
-     app: productpage
- action: ALLOW
- rules:
- - from:
-   - source:
-       principals:
-       - cluster.local/ns/default/sa/sleep
-       - cluster.local/$GATEWAY_SERVICE_ACCOUNT
+  selector:
+    matchLabels:
+      app: productpage
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+        - cluster.local/ns/default/sa/sleep
+        - cluster.local/$GATEWAY_SERVICE_ACCOUNT
 EOF
 {{< /text >}}
 
@@ -364,22 +373,23 @@ $ kubectl apply -f - <<EOF
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
- name: productpage-viewer
- namespace: default
+  name: productpage-viewer
+  namespace: default
 spec:
- selector:
-   matchLabels:
-     istio.io/gateway-name: bookinfo-productpage
- action: ALLOW
- rules:
- - from:
-   - source:
-       principals:
-       - cluster.local/ns/default/sa/sleep
-       - cluster.local/$GATEWAY_SERVICE_ACCOUNT
-   to:
-   - operation:
-       methods: ["GET"]
+  targetRef:
+    kind: Gateway
+    group: gateway.networking.k8s.io
+    name: bookinfo-productpage
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals:
+        - cluster.local/ns/default/sa/sleep
+        - cluster.local/$GATEWAY_SERVICE_ACCOUNT
+    to:
+    - operation:
+        methods: ["GET"]
 EOF
 {{< /text >}}
 

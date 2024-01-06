@@ -63,14 +63,14 @@ Istio 代理允许调用未知的服务。如果这个选项设置为 `REGISTRY_
 1. 要查看这种方法的实际效果，您需要确保 Istio 的安装配置了 `meshConfig.outboundTrafficPolicy.mode`
    选项为 `ALLOW_ANY`。它在默认情况下是开启的，除非您在安装 Istio 时显式地将它设置为 `REGISTRY_ONLY`。
 
-    运行以下命令以确认 `meshConfig.outboundTrafficPolicy.mode` 设置为 `ALLOW_ANY` 或被省略：
+    如果您不确定，可以运行以下命令来显示您的网格配置：
 
     {{< text bash >}}
-    $ kubectl get istiooperator installed-state -n istio-system -o jsonpath='{.spec.meshConfig.outboundTrafficPolicy.mode}'
-    ALLOW_ANY
+    $ kubectl get configmap istio -n istio-system -o yaml
     {{< /text >}}
 
-    您应该看到 `ALLOW_ANY` 或没有任何输出（默认为 `ALLOW_ANY`）。
+    除非您看到 `meshConfig.outboundTrafficPolicy.mode` 的值被显式设置为 `REGISTRY_ONLY`，
+    否则您可以确定该选项被设置为 `ALLOW_ANY`，这是唯一可能的值，也是默认值。
 
     {{< tip >}}
     如果您显式地设置了 `REGISTRY_ONLY` 模式，例如，通过使用更改后的设置重新运行原始的
@@ -373,9 +373,54 @@ servicesIpv4Cidr: 10.7.240.0/20
 
 使用 `--set global.proxy.includeIPRanges="10.4.0.0/14\,10.7.240.0/20"`
 
-#### Azure Container Service(ACS)
+#### Azure Kubernetes Service (AKS)
 
-使用 `--set global.proxy.includeIPRanges="10.244.0.0/16\,10.240.0.0/16`
+##### Kubenet
+
+想要查看集群中使用了哪些 Service CIDR 和 Pod CIDR，
+请使用 `az aks show` 并查找 `serviceCidr`：
+
+{{< text bash >}}
+$ az aks show --resource-group "${RESOURCE_GROUP}" --name "${CLUSTER}" | grep Cidr
+    "podCidr": "10.244.0.0/16",
+    "podCidrs": [
+    "serviceCidr": "10.0.0.0/16",
+    "serviceCidrs": [
+{{< /text >}}
+
+然后使用 `--set values.global.proxy.includeIPRanges="10.244.0.0/16\,10.0.0.0/16"`
+
+##### Azure CNI
+
+如果将 Azure CNI 与非覆盖网络模式结合使用，请按照以下步骤操作。
+如果将 Azure CNI 与覆盖网络结合使用，请遵循 [Kubenet 说明](#kubenet)。
+有关详细信息，请参阅
+[Azure CNI Overlay 文档](https://learn.microsoft.com/en-us/azure/aks/azure-cni-overlay)。
+
+想要查看集群中使用了哪个 Service CIDR，
+请使用 `az aks show` 并查找 `serviceCidr`：
+
+{{< text bash >}}
+$ az aks show --resource-group "${RESOURCE_GROUP}" --name "${CLUSTER}" | grep serviceCidr
+    "serviceCidr": "10.0.0.0/16",
+    "serviceCidrs": [
+{{< /text >}}
+
+想要查看集群中使用了哪个 Pod CIDR，请使用 `az` CLI 检查 `vnet`：
+
+{{< text bash >}}
+$ az aks show --resource-group "${RESOURCE_GROUP}" --name "${CLUSTER}" | grep nodeResourceGroup
+  "nodeResourceGroup": "MC_user-rg_user-cluster_region",
+  "nodeResourceGroupProfile": null,
+$ az network vnet list -g MC_user-rg_user-cluster_region | grep name
+    "name": "aks-vnet-74242220",
+        "name": "aks-subnet",
+$ az network vnet show -g MC_user-rg_user-cluster_region -n aks-vnet-74242220 | grep addressPrefix
+    "addressPrefixes": [
+      "addressPrefix": "10.224.0.0/16",
+{{< /text >}}
+
+然后使用 `--set values.global.proxy.includeIPRanges="10.244.0.0/16\,10.0.0.0/16"`
 
 #### Minikube, Docker For Desktop, Bare Metal
 
