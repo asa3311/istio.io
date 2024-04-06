@@ -411,7 +411,7 @@ ENDSNIP
 
 snip_install_crds() {
 kubectl get crd gateways.gateway.networking.k8s.io --context="${CTX_REMOTE_CLUSTER}" &> /dev/null || \
-  { kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd?ref=444631bfe06f3bcca5d0eadf1857eac1d369421d" | kubectl apply -f - --context="${CTX_REMOTE_CLUSTER}"; }
+  { kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd?ref=f6102784e48833220d538e5a78309b71476529c4" | kubectl apply -f - --context="${CTX_REMOTE_CLUSTER}"; }
 }
 
 snip_configure_and_test_an_ingress_gateway_3() {
@@ -496,7 +496,7 @@ istioctl create-remote-secret \
 
 snip_setup_eastwest_gateways_1() {
 samples/multicluster/gen-eastwest-gateway.sh \
-    --mesh mesh1 --cluster "${REMOTE_CLUSTER_NAME}" --network network1 > eastwest-gateway-1.yaml
+    --network network1 > eastwest-gateway-1.yaml
 istioctl manifest generate -f eastwest-gateway-1.yaml \
     --set values.global.istioNamespace=external-istiod | \
     kubectl apply --context="${CTX_REMOTE_CLUSTER}" -f -
@@ -504,7 +504,7 @@ istioctl manifest generate -f eastwest-gateway-1.yaml \
 
 snip_setup_eastwest_gateways_2() {
 samples/multicluster/gen-eastwest-gateway.sh \
-    --mesh mesh1 --cluster "${SECOND_CLUSTER_NAME}" --network network2 > eastwest-gateway-2.yaml
+    --network network2 > eastwest-gateway-2.yaml
 istioctl manifest generate -f eastwest-gateway-2.yaml \
     --set values.global.istioNamespace=external-istiod | \
     kubectl apply --context="${CTX_SECOND_CLUSTER}" -f -

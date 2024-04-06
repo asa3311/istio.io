@@ -48,7 +48,7 @@ istioctl analyze samples/bookinfo/networking/bookinfo-gateway.yaml samples/booki
 Error [IST0101] (Gateway default/bookinfo-gateway samples/bookinfo/networking/bookinfo-gateway.yaml:9) Referenced selector not found: "istio=ingressgateway"
 Error [IST0101] (VirtualService default/bookinfo samples/bookinfo/networking/bookinfo-gateway.yaml:41) Referenced host not found: "productpage"
 Error: Analyzers found issues when analyzing namespace: default.
-See https://istio.io/v1.21/docs/reference/config/analysis for more information about causes and resolutions.
+See https://istio.io/v1.22/docs/reference/config/analysis for more information about causes and resolutions.
 ENDSNIP
 
 snip_analyze_networking_directory() {
@@ -64,7 +64,7 @@ istioctl analyze --use-kube=false samples/bookinfo/networking/*.yaml
 }
 
 ! IFS=$'\n' read -r -d '' snip_vs_yaml_with_status <<\ENDSNIP
-apiVersion: networking.istio.io/v1beta1
+apiVersion: networking.istio.io/v1
 kind: VirtualService
 ...
 spec:
@@ -76,7 +76,7 @@ spec:
 status:
   observedGeneration: "1"
   validationMessages:
-  - documentationUrl: https://istio.io/v1.21/docs/reference/config/analysis/ist0101/
+  - documentationUrl: https://istio.io/v1.22/docs/reference/config/analysis/ist0101/
     level: ERROR
     type:
       code: IST0101
