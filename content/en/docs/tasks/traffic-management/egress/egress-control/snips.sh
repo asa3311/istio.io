@@ -19,7 +19,7 @@
 # WARNING: THIS IS AN AUTO-GENERATED FILE, DO NOT EDIT. PLEASE MODIFY THE ORIGINAL MARKDOWN FILE:
 #          docs/tasks/traffic-management/egress/egress-control/index.md
 ####################################################################################################
-source "content/en/boilerplates/snips/gateway-api-gamma-support.sh"
+source "content/en/boilerplates/snips/gateway-api-support.sh"
 
 snip_before_you_begin_1() {
 kubectl apply -f samples/sleep/sleep.yaml
@@ -169,7 +169,7 @@ EOF
 
 snip_manage_traffic_to_external_services_3() {
 kubectl apply -f - <<EOF
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: httpbin-ext

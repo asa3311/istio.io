@@ -23,6 +23,8 @@
 1.20.x
 1.20.x.
 1.21.x
+1.21.x.
+1.22.x
 1.23.x
 1.24.0
 1.24.x
@@ -96,6 +98,7 @@ abcde12345
 Abhi
 accounts.my
 ack-istio
+acked
 ACLs
 Acmeair
 addon
@@ -104,6 +107,7 @@ Aeraki
 AES-NI
 Airbnb
 Aizhamal
+Akamai
 AKS
 AKS-Engine
 Alexa
@@ -168,13 +172,16 @@ backoff
 backport
 base64
 Bazel
+BCubed
 Berben
 Berkus
+BeyondProd
 Bian
 BigQuery
 Birkland
 Bitnami
 bitpipe
+BlablaCar
 BlackHole
 BlackHoleCluster
 Blatt
@@ -211,7 +218,9 @@ CentOS
 Cernich
 CFP
 Chaomeng
+Chavali
 checksum
+Chircop
 Chrony
 Chun
 CIDRs
@@ -357,11 +366,22 @@ CVE-2023-35942
 CVE-2023-35943
 CVE-2023-35944
 CVE-2023-35945
+CVE-2023-45288
 CVE-2024-23322
 CVE-2024-23323
 CVE-2024-23324
 CVE-2024-23325
+CVE-2024-23326
 CVE-2024-23327
+CVE-2024-27919
+CVE-2024-30255
+CVE-2024-32475
+CVE-2024-32974
+CVE-2024-32975
+CVE-2024-32976
+CVE-2024-34362
+CVE-2024-34363
+CVE-2024-34364
 CVEs
 cves
 cvss
@@ -423,21 +443,25 @@ dual-stack
 Dubbo
 Duggirala
 DynamoDB
+Dynatrace
 e.g.
 e2e
 eBPF
 ECR
 edition.cnn.com
+Eilers
 Eitan
 Ekansh
 Elasticsearch
 embeddable
 emojis
+Emre
 enablement
 endUser-to-Service
 enqueue
 enum
 env
+EnvoyCon
 EnvoyFilter
 envoyproxy
 etcd
@@ -468,6 +492,7 @@ FedRAMP
 filename
 filenames
 fine-grained
+FIPS
 Firebase
 FitStation
 Fluentd
@@ -477,6 +502,7 @@ FQDN
 FQDNs
 frontend
 frontends
+Frédéric
 Fu
 fuzzers
 gamified
@@ -484,6 +510,7 @@ gapped
 gateway-api
 GatewayClass
 Gather.town
+Gaudet
 GB
 gbd
 GCP
@@ -509,6 +536,7 @@ grafana-istio-dashboard
 Graphviz
 gRPC
 grpc
+Gyanesh
 h2c
 Haidian
 Harvey
@@ -544,7 +572,9 @@ hypervisor
 Hystrix
 i.e.
 Idit
+iFood
 ILBs
+impactful
 incentivized
 Incrementality
 Indo-Pacific
@@ -573,6 +603,7 @@ IPv4
 IPv6
 ip_address
 Istio
+istio
 istio-agent
 istio-cni
 istio-control
@@ -605,6 +636,7 @@ ISTIO-SECURITY-2022-005
 ISTIO-SECURITY-2023-001
 ISTIO-SECURITY-2023-002
 ISTIO-SECURITY-2023-003
+ISTIO-SECURITY-2023-004
 istio-system
 istio.io
 istio.io.
@@ -687,6 +719,7 @@ Kustomization
 Kustomize
 kustomize
 kyzy
+L2-L4
 L3-4
 L4-L6
 L4-only
@@ -699,6 +732,7 @@ LibreSSL
 lifecycle
 LightStep
 Lightstep
+LinkedIn
 Linkerd
 linktitle
 linter
@@ -744,6 +778,7 @@ metadata
 MetalLB
 MetaProtocol
 metaprotocol
+metaresources
 MiB
 MicroK8s
 microservice
@@ -755,6 +790,7 @@ MirageDebug
 misconfiguration
 misconfigurations
 misconfigured
+Mishra
 misordered
 Mitigations
 mitigations
@@ -769,6 +805,7 @@ Multicloud
 multicloud
 Multicluster
 multicluster
+Murthy
 mutex
 mutual-tls
 Mwila
@@ -892,6 +929,7 @@ pre-release
 pre-specified
 precheck
 preconfigured
+Predibase
 prefetching
 preformatted
 preload
@@ -953,6 +991,7 @@ remediate
 remoteIpBlocks
 repo
 repurposed
+Requena
 requires_any
 Reskill
 ResourceQuota
@@ -976,11 +1015,14 @@ RPCs
 runtime
 runtimes
 sa
+Saarko
 SaaS
 Salesforce
 Salmond
 sandboxed
 sandboxing
+Sathish
+Savcı   
 sayin
 Schaaf
 schedulable
@@ -1015,6 +1057,7 @@ Shivanshu
 shortcode
 shortcodes
 Shray
+Shray
 Shriram
 Shrivastava
 sidebar_multicard
@@ -1031,6 +1074,7 @@ SLOs
 SMEs
 Snell-Feikema
 SNI
+SoC2
 SolarWinds
 Solo.io
 Solo.io.
@@ -1039,6 +1083,7 @@ Speedscale
 SPIFFE
 SPIFFE-compliant
 Splunk
+SPOFs
 src
 SREs
 Srihari
@@ -1066,6 +1111,8 @@ subnetworks
 subresource
 subresources
 substring
+Sudheendra
+Sumit
 Superfeet
 Superset
 superset
@@ -1075,6 +1122,7 @@ svc.com
 svg
 Sysdig
 Taillefer
+Tanzu
 TCP
 tcp
 TCP-level
@@ -1084,10 +1132,12 @@ team1-ns
 team2
 team2-ns
 Techstrong
+telcos
 Telekom
 telemetry.istio.io
 telemetryv2_
 templated
+templating
 Tencent
 test-api
 Tetrate
@@ -1106,6 +1156,7 @@ touchpoints
 tradeoff
 tradeoffs
 TrafficPolicy
+Trendyol
 Trivedi
 Trulia
 trustability
@@ -1151,13 +1202,18 @@ UTF-8
 v0.14.0
 v0.8.0
 v1
+v1.0
+v1.1
+v1.19
 v1.2.
 v1.21
 v1.21.0
+v1.22
 v1.26
 v1.27
 v1.28
 v1.29
+v1.30
 v1.55
 v1.55.1
 v1.7.4
@@ -1185,6 +1241,7 @@ veth
 veth-pair
 vhost
 vhosts
+Vij
 Virtualization
 virtualization
 VirtualService
@@ -1224,6 +1281,7 @@ wikipedia.org
 wildcard
 wildcarded
 wildcards
+Wireguard
 workgroup
 workload
 workstream

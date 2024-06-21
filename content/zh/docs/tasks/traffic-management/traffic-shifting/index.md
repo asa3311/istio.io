@@ -18,7 +18,7 @@ test: yes
 在本任务中，您将会把 50％ 的流量发送到 `reviews:v1`，另外，50％ 的流量发送到
 `reviews:v3`。接着，再把 100％ 的流量发送到 `reviews:v3` 来完成迁移。
 
-{{< boilerplate gateway-api-gamma-support >}}
+{{< boilerplate gateway-api-support >}}
 
 ## 开始之前 {#before-you-begin}
 
@@ -119,7 +119,7 @@ spec:
 
 {{< text syntax=bash outputis=yaml snip_id=gtw_verify_config_50_v3 >}}
 $ kubectl get httproute reviews -o yaml
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 ...
 spec:

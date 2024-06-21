@@ -19,7 +19,7 @@
 # WARNING: THIS IS AN AUTO-GENERATED FILE, DO NOT EDIT. PLEASE MODIFY THE ORIGINAL MARKDOWN FILE:
 #          docs/tasks/traffic-management/ingress/ingress-sni-passthrough/index.md
 ####################################################################################################
-source "content/en/boilerplates/snips/gateway-api-gamma-support.sh"
+source "content/en/boilerplates/snips/gateway-api-gamma-experimental.sh"
 
 snip_generate_client_and_server_certificates_and_keys_1() {
 mkdir example_certs
@@ -172,7 +172,7 @@ EOF
 
 snip_configure_an_ingress_gateway_2() {
 kubectl apply -f - <<EOF
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: mygateway

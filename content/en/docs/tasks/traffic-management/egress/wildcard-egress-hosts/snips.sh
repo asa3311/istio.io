@@ -19,7 +19,7 @@
 # WARNING: THIS IS AN AUTO-GENERATED FILE, DO NOT EDIT. PLEASE MODIFY THE ORIGINAL MARKDOWN FILE:
 #          docs/tasks/traffic-management/egress/wildcard-egress-hosts/index.md
 ####################################################################################################
-source "content/en/boilerplates/snips/gateway-api-gamma-support.sh"
+source "content/en/boilerplates/snips/gateway-api-support.sh"
 
 snip_before_you_begin_1() {
 istioctl install --set values.pilot.env.PILOT_ENABLE_CONFIG_DISTRIBUTION_TRACKING=true --set profile=demo --set meshConfig.outboundTrafficPolicy.mode=REGISTRY_ONLY
@@ -142,7 +142,7 @@ EOF
 
 snip_configure_egress_gateway_traffic_to_a_wildcard_host_2() {
 kubectl apply -f - <<EOF
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: wikipedia-egress-gateway
