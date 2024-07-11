@@ -351,6 +351,14 @@ pro_services:
     description: "CloudRaft offers comprehensive cloud-native solutions including Istio service mesh and Kubernetes."
     details:
       - "CloudRaft specializes in full-stack cloud-native solutions, including expert support for Istio service mesh integration. With extensive experience in cloud consulting, Kubernetes deployment, and Istio implementation, we ensure seamless operation within your environment. From consulting to training and production support, our comprehensive services maximize efficiency and scalability. With proven expertise and a client-centric approach, CloudRaft is your trusted partner for unlocking Istio's full potential in Kubernetes."
+  - name: "Venturenox"
+    logo: "/logos/venturenox.svg"
+    url: "https://venturenox.com/"
+    description: "Venturenox solves hard problems with cloud-native technologies, with Istio as the service mesh of choice."
+    details:
+      - "Venturenox helps companies plan and implement Istio service mesh, while taking the performance and security of your application to the next level."
+      - "We have been using Istio since 2018, and we have evolved with it, and have built our internal tooling and boilerplate which helps in quickly adopting Istio. We specialize in integrating Istio with DevOps and observability tools to create a high performance infrastructure."
+      - "We can work as contractors or as part of your team. We also provide managed services and hands-on trainings for Istio."
   - name: "Your Name Here"
     logo: "/logos/istio.svg"
     url: "https://github.com/istio/community/blob/master/CONTRIBUTING.md#promote-your-company-on-istioio"
@@ -618,6 +626,12 @@ training:
       - "The course will cover traffic management features such as load balancing, as well as important security aspects including authentication and authorization. Additionally, you will discover how to implement A/B testing and blue-green deployments using Istio."
       - "KodeKloud's hands-on labs will help you get started with Istio step by step. First, you'll learn how to install Istio on your cluster and deploy your first application. Then, you'll explore virtual services and destination rules, understand Istio's security features, and practice with our observability lab."
       - "Each lab is designed to be practical and easy to follow, making it simple for you to learn and apply your new skills."
+  - name: "Istio Fundamentals"
+    logo: "/logos/tetrate.svg"
+    url: "https://academy.tetrate.io/courses/istio-fundamentals"
+    description: "Istio Fundamentals"
+    details:
+      - "Tetrate presents Istio Fundamentals, a course that enables users to learn Istio easily with concept text, labs, and quizzes."
   - name: "Your Name Here"
     logo: "/logos/istio.svg"
     url: "https://github.com/istio/community/blob/master/CONTRIBUTING.md#promote-your-company-on-istioio"
